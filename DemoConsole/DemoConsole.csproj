@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\bottomleft.png" />
+    <None Remove="Images\bottomright.png" />
+    <None Remove="Images\image.png" />
+    <None Remove="Images\topleft.png" />
+    <None Remove="Images\topright.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Images\image.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Images\bottomleft.png" />
+    <EmbeddedResource Include="Images\bottomright.png" />
+    <EmbeddedResource Include="Images\topleft.png" />
+    <EmbeddedResource Include="Images\topright.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\KeyBitmapCreator\KeyBitmapCreator.csproj" />
+  </ItemGroup>
+
+</Project>

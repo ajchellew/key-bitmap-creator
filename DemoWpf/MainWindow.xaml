@@ -1,0 +1,23 @@
+﻿<Window x:Class="KeyBitmapCreator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KeyBitmapCreator"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" x:Name="StreamDeckInfo" />
+        <Slider Grid.Row="2" Minimum="5" Maximum="100" Value="100" ValueChanged="BrightnessSlider_OnValueChanged" TickFrequency="10" IsSnapToTickEnabled="True" TickPlacement="BottomRight" />
+
+        <TextBlock Grid.Row="3" x:Name="KeyEventText" />
+
+    </Grid>
+</Window>
