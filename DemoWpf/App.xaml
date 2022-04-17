@@ -4,6 +4,28 @@
              xmlns:local="clr-namespace:KeyBitmapCreator"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+
+            <Canvas x:Key="ArrowBottomLeft" Width="24" Height="24" x:Shared="False">
+                <Path Data="M18.36,19.78H4.22V5.64L8.47,9.88L14.12,4.22L19.78,9.88L14.12,15.54L18.36,19.78M6.34,17.66H13.41L11.29,15.54L16.95,9.88L14.12,7.05L8.46,12.71L6.34,10.59V17.66Z" Fill="White" />
+            </Canvas>
+
+            <Canvas x:Key="ArrowBottomRight" Width="24" Height="24" x:Shared="False">
+                <Path Data="M9.88,15.54L4.22,9.88L9.88,4.22L15.54,9.88L19.78,5.64V19.78H5.64L9.88,15.54M17.66,10.59L15.54,12.71L9.88,7.05L7.05,9.88L12.71,15.54L10.59,17.66H17.66V10.59Z" Fill="White" />
+            </Canvas>
+
+            <Canvas x:Key="ArrowTopRight" Width="24" Height="24" x:Shared="False">
+                <Path Data="M5.64,4.22H19.78V18.36L15.54,14.12L9.88,19.78L4.22,14.12L9.88,8.46L5.64,4.22M17.66,6.34H10.59L12.71,8.46L7.05,14.12L9.88,16.95L15.54,11.29L17.66,13.41V6.34H17.66Z" Fill="White" />
+            </Canvas>
+
+            <Canvas x:Key="ArrowTopLeft" Width="24" Height="24" x:Shared="False">
+                <Path Data="M14.12,8.46L19.78,14.12L14.12,19.78L8.46,14.12L4.22,18.36V4.22H18.36L14.12,8.46M6.34,13.41L8.46,11.29L14.12,16.95L16.95,14.12L11.29,8.47L13.41,6.34H6.34V13.41Z" Fill="White" />
+            </Canvas>
+
+            <Canvas x:Key="Box" Width="72" Height="72" x:Shared="False">
+                <Path Data="M 56.605691,9.506969 H 15.394309 c -3.267475,0 -5.8873406,2.619866 -5.8873406,5.887339 V 56.60569 a 5.8873402,5.8873402 0 0 0 5.8873406,5.88734 h 41.211382 a 5.8873402,5.8873402 0 0 0 5.88734,-5.88734 V 15.394308 c 0,-3.267473 -2.649303,-5.887339 -5.88734,-5.887339 z" Fill="White" />
+            </Canvas>
+
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

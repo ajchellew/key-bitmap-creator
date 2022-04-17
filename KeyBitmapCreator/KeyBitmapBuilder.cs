@@ -23,17 +23,17 @@ public class KeyBitmapBuilder
 
         if (_keyBitmapSpec.BackgroundColor != Color.Black)
             image.Mutate(x => x.Fill(_keyBitmapSpec.BackgroundColor));
+        
+        if (_keyBitmapSpec.ImageElements.Count > 0)
+        {
+            foreach (var keyBitmapImage in _keyBitmapSpec.ImageElements)
+                image.Mutate(x => x.DrawImage(keyBitmapImage.Image, keyBitmapImage.CalculateLocation(_keySize), new GraphicsOptions()));
+        }
 
         if (_keyBitmapSpec.TextElements.Count > 0)
         {
             foreach (var keyBitmapText in _keyBitmapSpec.TextElements)
                 image.Mutate(x => x.DrawText(keyBitmapText.BuildTextOptions(_keySize), keyBitmapText.Text, keyBitmapText.ForegroundColor));
-        }
-
-        if (_keyBitmapSpec.ImageElements.Count > 0)
-        {
-            foreach (var keyBitmapImage in _keyBitmapSpec.ImageElements)
-                image.Mutate(x => x.DrawImage(keyBitmapImage.Image, keyBitmapImage.CalculateLocation(_keySize), new GraphicsOptions()));
         }
 
         return KeyBitmap.Create.FromImageSharpImage(image);
