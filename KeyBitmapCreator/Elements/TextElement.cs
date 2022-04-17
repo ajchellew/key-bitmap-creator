@@ -4,29 +4,21 @@ using SixLabors.ImageSharp;
 
 namespace KeyBitmapCreator.Elements;
 
-public class KeyBitmapText : KeyBitmapElement
+internal class TextElement : BaseElement
 {
     public string Text { get; }
-    public FontSize FontSize { get; }
-    public KeyBitmapSpec ParentSpec { get; }
+
+    public TextElementOptions TextOptions { get; }
+
+    public BuilderSpec ParentSpec { get; }
     
-    private readonly Color? _foregroundColor;
-    public Color ForegroundColor => _foregroundColor ?? ParentSpec.ForegroundColor;
+    public Color ForegroundColor => TextOptions.ForegroundColor ?? ParentSpec.ForegroundColor;
 
-    public KeyBitmapText(string text, KeyBitmapSpec parentSpec, FontSize fontSize = FontSize.Normal, Color? foregroundColor = null)
+    public TextElement(string text, BuilderSpec parentSpec, TextElementOptions? textElementOptions = null, ElementLayoutOptions? layoutOptions = null) : base(layoutOptions)
     {
         Text = text;
         ParentSpec = parentSpec;
-        FontSize = fontSize;
-        _foregroundColor = foregroundColor;
-    }
-
-    public KeyBitmapText(string text, KeyBitmapSpec parentSpec, FontSize fontSize = FontSize.Normal, Color? foregroundColor = null, HorizontalAlignment horizontalAlignment = HorizontalAlignment.Center, VerticalAlignment verticalAlignment = VerticalAlignment.Center) : base(horizontalAlignment, verticalAlignment)
-    {
-        Text = text;
-        ParentSpec = parentSpec;
-        FontSize = fontSize;
-        _foregroundColor = foregroundColor;
+        TextOptions = textElementOptions ?? new TextElementOptions();
     }
 
     public TextOptions BuildTextOptions(int keySize)
@@ -38,10 +30,10 @@ public class KeyBitmapText : KeyBitmapElement
         var textVerticalAlignment = SixLabors.Fonts.VerticalAlignment.Center;
         var textAlignment = TextAlignment.Center;
 
-        switch (HorizontalAlignment)
+        switch (LayoutOptions.HorizontalAlignment)
         {
             case HorizontalAlignment.Left:
-                x = Padding;
+                x = LayoutOptions.PaddingLeft;
                 textHorizontalAlignment = SixLabors.Fonts.HorizontalAlignment.Left;
                 textAlignment = TextAlignment.Start;
                 break;
@@ -50,16 +42,16 @@ public class KeyBitmapText : KeyBitmapElement
                 x = keySize / 2;
                 break;
             case HorizontalAlignment.Right:
-                x = keySize - Padding;
+                x = keySize - LayoutOptions.PaddingRight;
                 textHorizontalAlignment = SixLabors.Fonts.HorizontalAlignment.Right;
                 textAlignment = TextAlignment.End;
                 break;
         }
 
-        switch (VerticalAlignment)
+        switch (LayoutOptions.VerticalAlignment)
         {
             case VerticalAlignment.Top:
-                y = Padding;
+                y = LayoutOptions.PaddingTop;
                 textVerticalAlignment = SixLabors.Fonts.VerticalAlignment.Top;
                 break;
             default:
@@ -67,12 +59,12 @@ public class KeyBitmapText : KeyBitmapElement
                 y = keySize / 2;
                 break;
             case VerticalAlignment.Bottom:
-                y = keySize - Padding;
+                y = keySize - LayoutOptions.PaddingBottom;
                 textVerticalAlignment = SixLabors.Fonts.VerticalAlignment.Bottom;
                 break;
         }
 
-        TextOptions textOptions = new TextOptions(GetFont(FontSize))
+        TextOptions textOptions = new TextOptions(GetFont(TextOptions.FontSize))
         {
             HorizontalAlignment = textHorizontalAlignment,
             VerticalAlignment = textVerticalAlignment,
@@ -88,9 +80,20 @@ public class KeyBitmapText : KeyBitmapElement
     {
         return fontSize switch
         {
-            FontSize.Small => KeyBitmapConstants.SmallFont,
-            FontSize.Large => KeyBitmapConstants.LargeFont,
-            _ => KeyBitmapConstants.NormalFont
+            FontSize.Small => Constants.SmallFont,
+            FontSize.Large => Constants.LargeFont,
+            _ => Constants.NormalFont
         };
     }
+}
+
+public class TextElementOptions
+{
+    public static TextElementOptions Large = new() { FontSize = FontSize.Large };
+
+    public static TextElementOptions Small = new() { FontSize = FontSize.Small };
+
+    public FontSize FontSize { get; set; } = FontSize.Normal;
+
+    public Color? ForegroundColor { get; set; }
 }

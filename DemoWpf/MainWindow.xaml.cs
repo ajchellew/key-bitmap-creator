@@ -3,14 +3,15 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using DemoWpf;
+using KeyBitmapCreator;
+using KeyBitmapCreator.Elements;
 using KeyBitmapCreator.Helper;
 using OpenMacroBoard.SDK;
 using SixLabors.ImageSharp;
 using StreamDeckSharp;
 using KeyEventArgs = OpenMacroBoard.SDK.KeyEventArgs;
 
-namespace KeyBitmapCreator
+namespace DemoWpf
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -55,7 +56,6 @@ namespace KeyBitmapCreator
 
             for (int keyId = 0; keyId < _deck.Keys.Count; keyId++)
             {
-
                 KeyBitmap keyBitmap;
 
                 switch (keyId)
@@ -63,15 +63,15 @@ namespace KeyBitmapCreator
                     // top left
                     case 0:
                         keyBitmap = new KeyBitmapBuilder(_deck.Keys.KeySize)
-                            .AddText((keyId + 1).ToString(), KeyBitmapCreator.FontSize.Large)
-                            .AddImage(WpfKeyBitmapHelper.ConvertCanvasToImage((Canvas)FindResource("ArrowTopLeft")), KeyBitmapCreator.HorizontalAlignment.Left, KeyBitmapCreator.VerticalAlignment.Top)
+                            .AddText((keyId + 1).ToString(), TextElementOptions.Large)
+                            .AddImage(WpfKeyBitmapHelper.ConvertCanvasToImage((Canvas)FindResource("ArrowTopLeft")), ElementLayoutOptions.TopLeft)
                             .Build();
                         break;
                     // top right
                     case 4:
                         keyBitmap = new KeyBitmapBuilder(_deck.Keys.KeySize)
-                            .AddText((keyId + 1).ToString(), KeyBitmapCreator.FontSize.Large)
-                            .AddImage(WpfKeyBitmapHelper.ConvertCanvasToImage((Canvas)FindResource("ArrowTopRight")), KeyBitmapCreator.HorizontalAlignment.Right, KeyBitmapCreator.VerticalAlignment.Top)
+                            .AddText((keyId + 1).ToString(), TextElementOptions.Large)
+                            .AddImage(WpfKeyBitmapHelper.ConvertCanvasToImage((Canvas)FindResource("ArrowTopRight")), ElementLayoutOptions.TopRight)
                             .Build();
                         break;
 
@@ -79,27 +79,35 @@ namespace KeyBitmapCreator
                     case 7:
                         keyBitmap = new KeyBitmapBuilder(_deck.Keys.KeySize)
                             .AddImage(WpfKeyBitmapHelper.ConvertCanvasToImage((Canvas)FindResource("Box")))
-                            .AddText((keyId + 1).ToString(), KeyBitmapCreator.FontSize.Large, Color.Black)
+                            .AddText((keyId + 1).ToString(), new TextElementOptions() { FontSize = KeyBitmapCreator.FontSize.Large, ForegroundColor = Color.Black })
                             .Build();
                         break;
                     // bottom left
                     case 10:
                         keyBitmap = new KeyBitmapBuilder(_deck.Keys.KeySize)
-                            .AddText((keyId + 1).ToString(), KeyBitmapCreator.FontSize.Large)
-                            .AddImage(WpfKeyBitmapHelper.ConvertCanvasToImage((Canvas)FindResource("ArrowBottomLeft")), KeyBitmapCreator.HorizontalAlignment.Left, KeyBitmapCreator.VerticalAlignment.Bottom)
+                            .AddText((keyId + 1).ToString(), TextElementOptions.Large)
+                            .AddImage(WpfKeyBitmapHelper.ConvertCanvasToImage((Canvas)FindResource("ArrowBottomLeft")), ElementLayoutOptions.BottomLeft)
                             .Build();
                         break;
                     // bottom right
                     case 14:
                         keyBitmap = new KeyBitmapBuilder(_deck.Keys.KeySize)
-                            .AddText((keyId + 1).ToString(), KeyBitmapCreator.FontSize.Large)
-                            .AddImage(WpfKeyBitmapHelper.ConvertCanvasToImage((Canvas)FindResource("ArrowBottomRight")), KeyBitmapCreator.HorizontalAlignment.Right, KeyBitmapCreator.VerticalAlignment.Bottom)
+                            .AddText((keyId + 1).ToString(), TextElementOptions.Large)
+                            .AddImage(WpfKeyBitmapHelper.ConvertCanvasToImage((Canvas)FindResource("ArrowBottomRight")), ElementLayoutOptions.BottomRight)
                             .Build();
                         break;
+
+                    case 12:
+                        keyBitmap = new KeyBitmapBuilder(_deck.Keys.KeySize)
+                            .AddText("Github", null, ElementLayoutOptions.BottomCenter)
+                            .AddImage(WpfKeyBitmapHelper.ConvertCanvasToImage((Canvas)FindResource("Github")), new ElementLayoutOptions() { VerticalAlignment = KeyBitmapCreator.VerticalAlignment.Top, PaddingTop = 10 })
+                            .Build();
+                        break;
+
                     // any other
                     default:
                         keyBitmap = new KeyBitmapBuilder(_deck.Keys.KeySize)
-                            .AddText((keyId + 1).ToString(), KeyBitmapCreator.FontSize.Large)
+                            .AddText((keyId + 1).ToString(), TextElementOptions.Large)
                             .Build();
                         break;
                 }

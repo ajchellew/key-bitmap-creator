@@ -10,7 +10,7 @@ namespace KeyBitmapCreator;
 public class KeyBitmapBuilder
 {
     private readonly int _keySize;
-    private readonly KeyBitmapSpec _keyBitmapSpec = new();
+    private readonly BuilderSpec _builderSpec = new();
 
     public KeyBitmapBuilder(int keySize)
     {
@@ -21,45 +21,52 @@ public class KeyBitmapBuilder
     {
         var image = new Image<Bgr24>(_keySize, _keySize);
 
-        if (_keyBitmapSpec.BackgroundColor != Color.Black)
-            image.Mutate(x => x.Fill(_keyBitmapSpec.BackgroundColor));
+        if (_builderSpec.BackgroundColor != Color.Black)
+            image.Mutate(x => x.BackgroundColor(_builderSpec.BackgroundColor));
         
-        if (_keyBitmapSpec.ImageElements.Count > 0)
+        if (_builderSpec.Elements.Count > 0)
         {
-            foreach (var keyBitmapImage in _keyBitmapSpec.ImageElements)
-                image.Mutate(x => x.DrawImage(keyBitmapImage.Image, keyBitmapImage.CalculateLocation(_keySize), new GraphicsOptions()));
+            foreach (var keyBitmapElement in _builderSpec.Elements)
+            {
+                switch (keyBitmapElement)
+                {
+                    case ImageElement imageElement:
+                        image.Mutate(x => x.DrawImage(imageElement.Image, imageElement.CalculateLocation(_keySize), new GraphicsOptions()));
+                        break;
+                    case TextElement textElement:
+                        image.Mutate(x => x.DrawText(textElement.BuildTextOptions(_keySize), textElement.Text, textElement.ForegroundColor));
+                        break;
+                }
+            }
         }
 
-        if (_keyBitmapSpec.TextElements.Count > 0)
-        {
-            foreach (var keyBitmapText in _keyBitmapSpec.TextElements)
-                image.Mutate(x => x.DrawText(keyBitmapText.BuildTextOptions(_keySize), keyBitmapText.Text, keyBitmapText.ForegroundColor));
-        }
+        if (Constants.DebugColorBlindnessMode != null)
+            image.Mutate(x => x.ColorBlindness((ColorBlindnessMode)Constants.DebugColorBlindnessMode));
 
         return KeyBitmap.Create.FromImageSharpImage(image);
     }
 
     public KeyBitmapBuilder SetForegroundColor(Color color)
     {
-        _keyBitmapSpec.ForegroundColor = color;
+        _builderSpec.ForegroundColor = color;
         return this;
     }
 
     public KeyBitmapBuilder SetBackgroundColor(Color color)
     {
-        _keyBitmapSpec.BackgroundColor = color;
+        _builderSpec.BackgroundColor = color;
         return this;
     }
 
-    public KeyBitmapBuilder AddImage(Image image, HorizontalAlignment horizontalAlignment = HorizontalAlignment.Center, VerticalAlignment verticalAlignment = VerticalAlignment.Center)
+    public KeyBitmapBuilder AddImage(Image image, ElementLayoutOptions? layoutOptions = null)
     {
-        _keyBitmapSpec.ImageElements.Add(new KeyBitmapImage(image, horizontalAlignment, verticalAlignment));
+        _builderSpec.Elements.Add(new ImageElement(image, layoutOptions));
         return this;
     }
 
-    public KeyBitmapBuilder AddText(string text, FontSize fontSize = FontSize.Normal, Color? foregroundColor = null, HorizontalAlignment horizontalAlignment = HorizontalAlignment.Center, VerticalAlignment verticalAlignment = VerticalAlignment.Center)
+    public KeyBitmapBuilder AddText(string text, TextElementOptions? textOptions = null, ElementLayoutOptions? layoutOptions = null)
     {
-        _keyBitmapSpec.TextElements.Add(new KeyBitmapText(text, _keyBitmapSpec, fontSize, foregroundColor, horizontalAlignment, verticalAlignment));
+        _builderSpec.Elements.Add(new TextElement(text, _builderSpec, textOptions, layoutOptions));
         return this;
     }
 }

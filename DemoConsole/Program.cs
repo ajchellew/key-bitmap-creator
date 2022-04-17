@@ -2,6 +2,7 @@
 
 using System.Reflection;
 using KeyBitmapCreator;
+using KeyBitmapCreator.Elements;
 using KeyBitmapCreator.Helper;
 using OpenMacroBoard.SDK;
 using SixLabors.ImageSharp;
@@ -47,36 +48,36 @@ void DrawingDemo(IMacroBoard deck)
     var key0 = new KeyBitmapBuilder(deck.Keys.KeySize)
         .SetBackgroundColor(Color.White)
         .SetForegroundColor(Color.Red)
-        .AddText("1", FontSize.Normal, null, HorizontalAlignment.Left, VerticalAlignment.Top)
+        .AddText("1", TextElementOptions.Large, ElementLayoutOptions.TopLeft)
         .Build();
     deck.SetKeyBitmap(0, key0);
 
     var key1 = new KeyBitmapBuilder(deck.Keys.KeySize)
-        .AddText("2", FontSize.Large, null, HorizontalAlignment.Center, VerticalAlignment.Top)
+        .AddText("2", TextElementOptions.Large, ElementLayoutOptions.TopCenter)
         .Build();
     deck.SetKeyBitmap(1, key1);
 
     var key2 = new KeyBitmapBuilder(deck.Keys.KeySize)
         .SetBackgroundColor(Color.Blue)
-        .AddText("3", FontSize.Normal, Color.White, HorizontalAlignment.Center, VerticalAlignment.Top)
+        .AddText("3", new TextElementOptions() { ForegroundColor = Color.White }, ElementLayoutOptions.TopCenter)
         .Build();
     deck.SetKeyBitmap(2, key2);
 
     var key3 = new KeyBitmapBuilder(deck.Keys.KeySize)
-        .AddText("4", FontSize.Large, null, HorizontalAlignment.Center, VerticalAlignment.Top)
+        .AddText("4", TextElementOptions.Large, ElementLayoutOptions.TopCenter)
         .Build();
     deck.SetKeyBitmap(3, key3);
 
     var key4 = new KeyBitmapBuilder(deck.Keys.KeySize)
         .SetBackgroundColor(Color.White)
-        .AddText("5", FontSize.Normal, Color.Blue, HorizontalAlignment.Right, VerticalAlignment.Top)
+        .AddText("5", new TextElementOptions() { ForegroundColor = Color.Blue }, ElementLayoutOptions.TopRight)
         .Build();
     deck.SetKeyBitmap(4, key4);
 
     // Row 2
 
     var key5 = new KeyBitmapBuilder(deck.Keys.KeySize)
-        .AddText("6", FontSize.Small, null, HorizontalAlignment.Left, VerticalAlignment.Center)
+        .AddText("6", null, ElementLayoutOptions.CenterLeft)
         .Build();
     deck.SetKeyBitmap(5, key5);
 
@@ -87,21 +88,21 @@ void DrawingDemo(IMacroBoard deck)
     using var topRightStream = assembly.GetManifestResourceStream("DemoConsole.Images.topright.png");
 
     var key6 = new KeyBitmapBuilder(deck.Keys.KeySize)
-        .AddImage(Image.Load(bottomLeftStream), HorizontalAlignment.Left, VerticalAlignment.Bottom)
-        .AddImage(Image.Load(bottomRightStream), HorizontalAlignment.Right, VerticalAlignment.Bottom)
-        .AddImage(Image.Load(topLeftStream), HorizontalAlignment.Left, VerticalAlignment.Top)
-        .AddImage(Image.Load(topRightStream), HorizontalAlignment.Right, VerticalAlignment.Top)
+        .AddImage(Image.Load(bottomLeftStream), ElementLayoutOptions.BottomLeft)
+        .AddImage(Image.Load(bottomRightStream), ElementLayoutOptions.BottomRight)
+        .AddImage(Image.Load(topLeftStream), ElementLayoutOptions.TopLeft)
+        .AddImage(Image.Load(topRightStream), ElementLayoutOptions.TopRight)
         .Build();
     deck.SetKeyBitmap(6, key6);
 
     var key7 = new KeyBitmapBuilder(deck.Keys.KeySize)
         .SetBackgroundColor(Color.Red)
         .SetForegroundColor(Color.BurlyWood)
-        .AddText("8", FontSize.Large)
-        .AddText("1", FontSize.Normal, Color.Blue, HorizontalAlignment.Left, VerticalAlignment.Top)
-        .AddText("2", FontSize.Normal, null, HorizontalAlignment.Right, VerticalAlignment.Top)
-        .AddText("3", FontSize.Normal, Color.Blue, HorizontalAlignment.Left, VerticalAlignment.Bottom)
-        .AddText("4", FontSize.Normal, null, HorizontalAlignment.Right, VerticalAlignment.Bottom)
+        .AddText("8", TextElementOptions.Large)
+        .AddText("1", new TextElementOptions() { ForegroundColor = Color.Blue }, ElementLayoutOptions.TopLeft)
+        .AddText("2", null, ElementLayoutOptions.TopRight)
+        .AddText("3", new TextElementOptions() { ForegroundColor = Color.Blue }, ElementLayoutOptions.BottomLeft)
+        .AddText("4", null, ElementLayoutOptions.BottomRight)
         .Build();
     deck.SetKeyBitmap(7, key7);
 
@@ -109,13 +110,13 @@ void DrawingDemo(IMacroBoard deck)
 
     var key8 = new KeyBitmapBuilder(deck.Keys.KeySize)
         .SetBackgroundColor(Color.Red)
-        .AddImage(Image.Load(topStream), HorizontalAlignment.Center, VerticalAlignment.Top)
-        .AddText("Text", FontSize.Normal, Color.Black, HorizontalAlignment.Center, VerticalAlignment.Bottom)
+        .AddImage(Image.Load(topStream), new ElementLayoutOptions() { VerticalAlignment = VerticalAlignment.Top, PaddingTop = 0 })
+        .AddText("Text", null, new ElementLayoutOptions() { VerticalAlignment = VerticalAlignment.Bottom, PaddingBottom = 6 })
         .Build();
     deck.SetKeyBitmap(8, key8);
 
     var key9 = new KeyBitmapBuilder(deck.Keys.KeySize)
-        .AddText("10", FontSize.Small, null, HorizontalAlignment.Right, VerticalAlignment.Center)
+        .AddText("10", TextElementOptions.Small, ElementLayoutOptions.CenterRight)
         .Build();
     deck.SetKeyBitmap(9, key9);
 
@@ -124,12 +125,12 @@ void DrawingDemo(IMacroBoard deck)
     var key10 = new KeyBitmapBuilder(deck.Keys.KeySize)
         .SetBackgroundColor(Color.White)
         .SetForegroundColor(Color.Red)
-        .AddText("11", FontSize.Normal, null, HorizontalAlignment.Left, VerticalAlignment.Bottom)
+        .AddText("11", null, ElementLayoutOptions.BottomLeft)
         .Build();
     deck.SetKeyBitmap(10, key10);
 
     var key14 = new KeyBitmapBuilder(deck.Keys.KeySize)
-        .AddText("15", FontSize.Normal, null, HorizontalAlignment.Right, VerticalAlignment.Bottom)
+        .AddText("15", null, ElementLayoutOptions.BottomRight)
         .Build();
     deck.SetKeyBitmap(14, key14);
 }

@@ -4,7 +4,7 @@ using SixLabors.ImageSharp;
 
 namespace KeyBitmapCreator;
 
-public class KeyBitmapSpec
+internal class BuilderSpec
 {
     private Color? _foregroundColor;
 
@@ -22,7 +22,5 @@ public class KeyBitmapSpec
     /// </summary>
     public Color BackgroundColor { get; set; } = Color.Black;
 
-    public List<KeyBitmapText> TextElements { get; set; } = new();
-
-    public List<KeyBitmapImage> ImageElements { get; set; } = new();
+    public List<BaseElement> Elements { get; set; } = new();
 }
