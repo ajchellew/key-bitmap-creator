@@ -15,5 +15,7 @@ internal class Constants
     public static readonly Font NormalFont = SystemFonts.Get(FontFamily, CultureInfo.InvariantCulture).CreateFont(16);
     public static readonly Font SmallFont = SystemFonts.Get(FontFamily, CultureInfo.InvariantCulture).CreateFont(10);
 
+    // For testing what a colored layout might look like to someone who is colorblind
+    // Red-green color blindness is the most common - Deuteranomaly is the most common.
     public static readonly ColorBlindnessMode? DebugColorBlindnessMode = null;
 }

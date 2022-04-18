@@ -22,7 +22,7 @@ public class KeyBitmapBuilder
         var image = new Image<Bgr24>(_keySize, _keySize);
 
         if (_builderSpec.BackgroundColor != Color.Black)
-            image.Mutate(x => x.BackgroundColor(_builderSpec.BackgroundColor));
+            image.Mutate(x => x.Fill(_builderSpec.BackgroundColor));
         
         if (_builderSpec.Elements.Count > 0)
         {
