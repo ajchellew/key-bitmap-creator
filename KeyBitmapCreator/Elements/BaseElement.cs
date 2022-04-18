@@ -1,6 +1,11 @@
 ﻿namespace KeyBitmapCreator.Elements;
 
-internal class BaseElement
+interface IBitmapElement
+{
+    
+}
+
+internal class BaseElement : IBitmapElement
 {
     public ElementLayoutOptions LayoutOptions { get; set; }
 

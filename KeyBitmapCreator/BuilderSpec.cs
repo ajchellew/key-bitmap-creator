@@ -22,5 +22,5 @@ internal class BuilderSpec
     /// </summary>
     public Color BackgroundColor { get; set; } = Color.Black;
 
-    public List<BaseElement> Elements { get; set; } = new();
+    public List<IBitmapElement> Elements { get; set; } = new();
 }

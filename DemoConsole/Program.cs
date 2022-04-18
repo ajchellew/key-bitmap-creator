@@ -88,10 +88,11 @@ void DrawingDemo(IMacroBoard deck)
     using var topRightStream = assembly.GetManifestResourceStream("DemoConsole.Images.topright.png");
 
     var key6 = new KeyBitmapBuilder(deck.Keys.KeySize)
-        .AddImage(Image.Load(bottomLeftStream), ElementLayoutOptions.BottomLeft)
-        .AddImage(Image.Load(bottomRightStream), ElementLayoutOptions.BottomRight)
-        .AddImage(Image.Load(topLeftStream), ElementLayoutOptions.TopLeft)
-        .AddImage(Image.Load(topRightStream), ElementLayoutOptions.TopRight)
+        .AddImage(Image.Load(bottomLeftStream), null, ElementLayoutOptions.BottomLeft)
+        .AddImage(Image.Load(bottomRightStream), null, ElementLayoutOptions.BottomRight)
+        .AddImage(Image.Load(topLeftStream), null, ElementLayoutOptions.TopLeft)
+        .AddImage(Image.Load(topRightStream), null, new ElementLayoutOptions() { HorizontalAlignment = HorizontalAlignment.Right, VerticalAlignment = VerticalAlignment.Top, PaddingTop = 0, PaddingRight = 0 })
+        .AddText("Test Images", TextElementOptions.Small)
         .Build();
     deck.SetKeyBitmap(6, key6);
 
@@ -110,7 +111,7 @@ void DrawingDemo(IMacroBoard deck)
 
     var key8 = new KeyBitmapBuilder(deck.Keys.KeySize)
         .SetBackgroundColor(Color.Red)
-        .AddImage(Image.Load(topStream), new ElementLayoutOptions() { VerticalAlignment = VerticalAlignment.Top, PaddingTop = 0 })
+        .AddImage(Image.Load(topStream), null, new ElementLayoutOptions() { VerticalAlignment = VerticalAlignment.Top, PaddingTop = 0 })
         .AddText("Text", null, new ElementLayoutOptions() { VerticalAlignment = VerticalAlignment.Bottom, PaddingBottom = 6 })
         .Build();
     deck.SetKeyBitmap(8, key8);
@@ -130,6 +131,8 @@ void DrawingDemo(IMacroBoard deck)
     deck.SetKeyBitmap(10, key10);
 
     var key14 = new KeyBitmapBuilder(deck.Keys.KeySize)
+        .AddPoly(PolygonDefinition.CreateRelative(RelativePointsHelper.RectangleFromLeft(50), Color.Cyan))
+        .AddPoly(PolygonDefinition.CreateRelative(RelativePointsHelper.RectangleFromTop(50), Color.DarkCyan))
         .AddText("15", null, ElementLayoutOptions.BottomRight)
         .Build();
     deck.SetKeyBitmap(14, key14);

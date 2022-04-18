@@ -21,6 +21,12 @@ public enum FontSize
     Large
 }
 
+public enum ImageSizeMode
+{
+    None,
+    FillKey
+}
+
 public class ElementLayoutOptions
 {
     public static ElementLayoutOptions TopLeft = new() { HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Top };

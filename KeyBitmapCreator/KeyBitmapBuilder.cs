@@ -31,10 +31,29 @@ public class KeyBitmapBuilder
                 switch (keyBitmapElement)
                 {
                     case ImageElement imageElement:
+
+                        // a basic start
+                        if (imageElement.ImageOptions.SizeMode == ImageSizeMode.FillKey)
+                            imageElement.Image.Mutate(x => x.Resize(new Size(_keySize, _keySize)));
+
                         image.Mutate(x => x.DrawImage(imageElement.Image, imageElement.CalculateLocation(_keySize), new GraphicsOptions()));
                         break;
                     case TextElement textElement:
                         image.Mutate(x => x.DrawText(textElement.BuildTextOptions(_keySize), textElement.Text, textElement.ForegroundColor));
+                        break;
+                    case PolyElement polyElement:
+                        image.Mutate(x =>
+                        {
+                            switch (polyElement.Definition)
+                            {
+                                case PolygonDefinition:
+                                    x.FillPolygon(new DrawingOptions(), polyElement.Color, polyElement.GetRenderPoints(_keySize));
+                                    break;
+                                case PolylineDefinition polylineDefinition:
+                                    x.DrawPolygon(new DrawingOptions(), polyElement.Color, polylineDefinition.Width, polyElement.GetRenderPoints(_keySize));
+                                    break;
+                            }
+                        });
                         break;
                 }
             }
@@ -58,9 +77,9 @@ public class KeyBitmapBuilder
         return this;
     }
 
-    public KeyBitmapBuilder AddImage(Image image, ElementLayoutOptions? layoutOptions = null)
+    public KeyBitmapBuilder AddImage(Image image, ImageElementOptions? imageOptions = null, ElementLayoutOptions? layoutOptions = null)
     {
-        _builderSpec.Elements.Add(new ImageElement(image, layoutOptions));
+        _builderSpec.Elements.Add(new ImageElement(image, imageOptions, layoutOptions));
         return this;
     }
 
@@ -69,4 +88,26 @@ public class KeyBitmapBuilder
         _builderSpec.Elements.Add(new TextElement(text, _builderSpec, textOptions, layoutOptions));
         return this;
     }
+
+    public KeyBitmapBuilder AddPoly(IPolyDefinition polyDefinition)
+    {
+        _builderSpec.Elements.Add(new PolyElement(polyDefinition, _builderSpec));
+        return this;
+    }
+
+    /*public KeyBitmapBuilder AddPolygonPercentageSized(Point[] points, Color? color = null, bool filled = true)
+    {
+        PointF[] pointFs = new PointF[points.Length];
+
+        float onePc = (float)_keySize / 100;
+
+        for (int i = 0; i < points.Length; i++)
+            pointFs[i] = new PointF(onePc  * points[i].X, onePc * points[i].Y);
+
+        var element = new PolygonElement { Points = pointFs, Filled = filled };
+        if (color != null)
+            element.Color = (Color)color;
+        _builderSpec.Elements.Add(element);
+        return this;
+    }*/
 }

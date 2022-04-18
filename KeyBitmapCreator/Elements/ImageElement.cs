@@ -5,10 +5,12 @@ namespace KeyBitmapCreator.Elements;
 internal class ImageElement : BaseElement
 {
     public Image Image { get; }
+    public ImageElementOptions ImageOptions { get; }
 
-    public ImageElement(Image image, ElementLayoutOptions? layoutOptions = null) : base(layoutOptions)
+    public ImageElement(Image image, ImageElementOptions? imageOptions = null, ElementLayoutOptions? layoutOptions = null) : base(layoutOptions)
     {
         Image = image;
+        ImageOptions = imageOptions ?? new ImageElementOptions();
     }
 
     public Point CalculateLocation(int keySize)
@@ -27,4 +29,19 @@ internal class ImageElement : BaseElement
         };
         return new Point(x, y);
     }
+}
+
+public class ImageElementOptions
+{
+    public static ImageElementOptions FillKey()
+    {
+        return new ImageElementOptions() { SizeMode = ImageSizeMode.FillKey };
+    }
+
+    public static ImageElementOptions Create(ImageSizeMode sizeMode)
+    {
+        return new ImageElementOptions() { SizeMode = sizeMode };
+    }
+
+    public ImageSizeMode SizeMode { get; set; } = ImageSizeMode.None;
 }

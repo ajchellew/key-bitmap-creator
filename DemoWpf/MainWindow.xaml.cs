@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using KeyBitmapCreator;
 using KeyBitmapCreator.Elements;
 using KeyBitmapCreator.Helper;
@@ -10,6 +14,7 @@ using OpenMacroBoard.SDK;
 using SixLabors.ImageSharp;
 using StreamDeckSharp;
 using KeyEventArgs = OpenMacroBoard.SDK.KeyEventArgs;
+using Point = SixLabors.ImageSharp.Point;
 
 namespace DemoWpf
 {
@@ -60,7 +65,7 @@ namespace DemoWpf
 
                 switch (keyId)
                 {
-                    // top left
+                    /*// top left
                     case 0:
                         keyBitmap = new KeyBitmapBuilder(_deck.Keys.KeySize)
                             .AddText((keyId + 1).ToString(), TextElementOptions.Large)
@@ -72,14 +77,6 @@ namespace DemoWpf
                         keyBitmap = new KeyBitmapBuilder(_deck.Keys.KeySize)
                             .AddText((keyId + 1).ToString(), TextElementOptions.Large)
                             .AddImage(WpfKeyBitmapHelper.ConvertCanvasToImage((Canvas)FindResource("ArrowTopRight")), ElementLayoutOptions.TopRight)
-                            .Build();
-                        break;
-
-                    // middle
-                    case 7:
-                        keyBitmap = new KeyBitmapBuilder(_deck.Keys.KeySize)
-                            .AddImage(WpfKeyBitmapHelper.ConvertCanvasToImage((Canvas)FindResource("Box")))
-                            .AddText((keyId + 1).ToString(), new TextElementOptions() { FontSize = KeyBitmapCreator.FontSize.Large, ForegroundColor = Color.Black })
                             .Build();
                         break;
                     // bottom left
@@ -95,12 +92,28 @@ namespace DemoWpf
                             .AddText((keyId + 1).ToString(), TextElementOptions.Large)
                             .AddImage(WpfKeyBitmapHelper.ConvertCanvasToImage((Canvas)FindResource("ArrowBottomRight")), ElementLayoutOptions.BottomRight)
                             .Build();
+                        break;*/
+
+                    case 6:
+                        keyBitmap = new KeyBitmapBuilder(_deck.Keys.KeySize)
+                            .AddPoly(PolygonDefinition.CreateRelative(RelativePointsHelper.RectangleFromTop(33), Color.Red))
+                            .AddPoly(PolygonDefinition.CreateRelative(RelativePointsHelper.HorizontalRectangleFromCenter(35), Color.White))
+                            .AddPoly(PolygonDefinition.CreateRelative(RelativePointsHelper.RectangleFromBottom(33), Color.Red))
+                            .Build();
                         break;
 
-                    case 12:
+                    case 7:
                         keyBitmap = new KeyBitmapBuilder(_deck.Keys.KeySize)
+                            .SetForegroundColor(Color.Black)
+                            .AddPoly(PolygonDefinition.CreateRelative(RelativePointsHelper.RectangleFromBottom(30), Color.White))
                             .AddText("Github", null, ElementLayoutOptions.BottomCenter)
-                            .AddImage(WpfKeyBitmapHelper.ConvertCanvasToImage((Canvas)FindResource("Github")), new ElementLayoutOptions() { VerticalAlignment = KeyBitmapCreator.VerticalAlignment.Top, PaddingTop = 10 })
+                            .AddImage(WpfKeyBitmapHelper.ConvertCanvasToImage((Canvas)FindResource("Github")), null, new ElementLayoutOptions() { VerticalAlignment = KeyBitmapCreator.VerticalAlignment.Top, PaddingTop = 5 })
+                            .Build();
+                        break;
+
+                    case 8:
+                        keyBitmap = new KeyBitmapBuilder(_deck.Keys.KeySize)
+                                .AddImage(WpfKeyBitmapHelper.ConvertCanvasToImage((Canvas)FindResource("Uk")), ImageElementOptions.FillKey())
                             .Build();
                         break;
 
@@ -129,6 +142,19 @@ namespace DemoWpf
             else
             {
                 KeyEventText.Dispatcher.Invoke(() => { KeyEventText.Text = "Released - " + (keyId + 1); });
+
+                switch (keyId)
+                {
+                    case 6:
+                        OpenUrl("https://github.com/OpenMacroBoard");
+                        break;
+                    case 7:
+                        OpenUrl("https://github.com");
+                        break;
+                    case 8:
+                        OpenUrl("https://github.com/ajchellew/key-bitmap-creator");
+                        break;
+                }
             }
         }
 
@@ -146,6 +172,35 @@ namespace DemoWpf
         private void BrightnessSlider_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             _deck?.SetBrightness((byte)e.NewValue);
+        }
+
+        private void OpenUrl(string url)
+        {
+            try
+            {
+                Process.Start(url);
+            }
+            catch
+            {
+                // hack because of this: https://github.com/dotnet/corefx/issues/10361
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    url = url.Replace("&", "^&");
+                    Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    Process.Start("xdg-open", url);
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                {
+                    Process.Start("open", url);
+                }
+                else
+                {
+                    throw;
+                }
+            }
         }
     }
 }
