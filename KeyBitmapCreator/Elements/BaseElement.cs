@@ -1,4 +1,6 @@
-﻿namespace KeyBitmapCreator.Elements;
+﻿using System.Runtime.CompilerServices;
+
+namespace KeyBitmapCreator.Elements;
 
 interface IBitmapElement
 {

@@ -33,7 +33,7 @@ internal class TextElement : BaseElement
         switch (LayoutOptions.HorizontalAlignment)
         {
             case HorizontalAlignment.Left:
-                x = LayoutOptions.PaddingLeft;
+                x = LayoutOptions.PaddingLeftRight;
                 textHorizontalAlignment = SixLabors.Fonts.HorizontalAlignment.Left;
                 textAlignment = TextAlignment.Start;
                 break;
@@ -42,7 +42,7 @@ internal class TextElement : BaseElement
                 x = keySize / 2;
                 break;
             case HorizontalAlignment.Right:
-                x = keySize - LayoutOptions.PaddingRight;
+                x = keySize - LayoutOptions.PaddingLeftRight;
                 textHorizontalAlignment = SixLabors.Fonts.HorizontalAlignment.Right;
                 textAlignment = TextAlignment.End;
                 break;
@@ -51,7 +51,7 @@ internal class TextElement : BaseElement
         switch (LayoutOptions.VerticalAlignment)
         {
             case VerticalAlignment.Top:
-                y = LayoutOptions.PaddingTop;
+                y = LayoutOptions.PaddingTopBottom;
                 textVerticalAlignment = SixLabors.Fonts.VerticalAlignment.Top;
                 break;
             default:
@@ -59,7 +59,7 @@ internal class TextElement : BaseElement
                 y = keySize / 2;
                 break;
             case VerticalAlignment.Bottom:
-                y = keySize - LayoutOptions.PaddingBottom;
+                y = keySize - LayoutOptions.PaddingTopBottom;
                 textVerticalAlignment = SixLabors.Fonts.VerticalAlignment.Bottom;
                 break;
         }

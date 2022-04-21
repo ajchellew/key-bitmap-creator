@@ -5,9 +5,9 @@ VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoWpf", "DemoWpf\DemoWpf.csproj", "{F98ED925-7417-4773-9733-6410082D815B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyBitmapCreator", "KeyBitmapCreator\KeyBitmapCreator.csproj", "{4DEF9CB8-8643-43E0-9ABA-DD79FDDF9691}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeyBitmapCreator", "KeyBitmapCreator\KeyBitmapCreator.csproj", "{4DEF9CB8-8643-43E0-9ABA-DD79FDDF9691}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoConsole", "DemoConsole\DemoConsole.csproj", "{5AFD27E2-7175-4E94-A9A7-456735401B54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoConsole", "DemoConsole\DemoConsole.csproj", "{5AFD27E2-7175-4E94-A9A7-456735401B54}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

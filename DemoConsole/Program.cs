@@ -91,7 +91,7 @@ void DrawingDemo(IMacroBoard deck)
         .AddImage(Image.Load(bottomLeftStream), null, ElementLayoutOptions.BottomLeft)
         .AddImage(Image.Load(bottomRightStream), null, ElementLayoutOptions.BottomRight)
         .AddImage(Image.Load(topLeftStream), null, ElementLayoutOptions.TopLeft)
-        .AddImage(Image.Load(topRightStream), null, new ElementLayoutOptions() { HorizontalAlignment = HorizontalAlignment.Right, VerticalAlignment = VerticalAlignment.Top, PaddingTop = 0, PaddingRight = 0 })
+        .AddImage(Image.Load(topRightStream), null, new ElementLayoutOptions() { HorizontalAlignment = HorizontalAlignment.Right, VerticalAlignment = VerticalAlignment.Top, PaddingTopBottom = 0, PaddingLeftRight = 0 })
         .AddText("Test Images", TextElementOptions.Small)
         .Build();
     deck.SetKeyBitmap(6, key6);
@@ -111,8 +111,8 @@ void DrawingDemo(IMacroBoard deck)
 
     var key8 = new KeyBitmapBuilder(deck.Keys.KeySize)
         .SetBackgroundColor(Color.Red)
-        .AddImage(Image.Load(topStream), null, new ElementLayoutOptions() { VerticalAlignment = VerticalAlignment.Top, PaddingTop = 0 })
-        .AddText("Text", null, new ElementLayoutOptions() { VerticalAlignment = VerticalAlignment.Bottom, PaddingBottom = 6 })
+        .AddImage(Image.Load(topStream), null, new ElementLayoutOptions() { VerticalAlignment = VerticalAlignment.Top, PaddingTopBottom = 0 })
+        .AddText("Text", null, new ElementLayoutOptions() { VerticalAlignment = VerticalAlignment.Bottom, PaddingTopBottom = 6 })
         .Build();
     deck.SetKeyBitmap(8, key8);
 

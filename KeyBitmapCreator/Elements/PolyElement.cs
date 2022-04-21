@@ -8,10 +8,14 @@ internal class PolyElement : IBitmapElement
 
     public BuilderSpec ParentSpec { get; }
 
-    public PolyElement(IPolyDefinition definition, BuilderSpec parentSpec)
+    public List<FilterDefinition> FilterDefinitions { get; } = new();
+
+    public PolyElement(IPolyDefinition definition, BuilderSpec parentSpec, FilterDefinition? filter = null)
     {
         Definition = definition;
         ParentSpec = parentSpec;
+        if (filter != null)
+            FilterDefinitions.Add(filter);
     }
 
     public Color Color => Definition.Color ?? ParentSpec.ForegroundColor;

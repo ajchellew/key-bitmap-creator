@@ -49,8 +49,6 @@ public class ElementLayoutOptions
 
     public VerticalAlignment VerticalAlignment { get; set; } = VerticalAlignment.Center;
 
-    public int PaddingTop { get; set; } = Constants.DefaultPadding;
-    public int PaddingBottom { get; set; } = Constants.DefaultPadding;
-    public int PaddingLeft { get; set; } = Constants.DefaultPadding;
-    public int PaddingRight { get; set; } = Constants.DefaultPadding;
+    public int PaddingTopBottom { get; set; } = Constants.DefaultPadding;
+    public int PaddingLeftRight { get; set; } = Constants.DefaultPadding;
 }
